@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 450px;
+      padding: 0;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 24px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+    }
+    
+    .header p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .tabs {
+      display: flex;
+      background: #f5f5f5;
+      border-bottom: 2px solid #ddd;
+    }
+    
+    .tab {
+      flex: 1;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      border: none;
+      background: #f5f5f5;
+      color: #666;
+      transition: all 0.2s;
+    }
+    
+    .tab:hover {
+      background: #e8e8e8;
+    }
+    
+    .tab.active {
+      background: white;
+      color: #667eea;
+      border-bottom: 3px solid #667eea;
+    }
+    
+    .content {
+      padding: 24px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .feature {
+      background: #f5f5f5;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      border-left: 4px solid #667eea;
+    }
+    
+    .feature h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      color: #333;
+    }
+    
+    .feature p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #666;
+    }
+    
+    .instructions {
+      background: #e3f2fd;
+      border: 2px solid #2196f3;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .instructions h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      color: #1565c0;
+    }
+    
+    .instructions ol {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    
+    .instructions li {
+      margin-bottom: 8px;
+    }
+    
+    .highlight {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    
+    .highlight-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #856404;
+      margin: 0;
+    }
+    
+    /* Pro Mode Styles */
+    .pro-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .pro-header h2 {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+    }
+    
+    .pro-header p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .setting-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #333;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+      font-family: monospace;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f5f5f5;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .toggle-label {
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .toggle {
+      position: relative;
+      width: 60px;
+      height: 30px;
+    }
+    
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 30px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background-color: #667eea;
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(30px);
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    button:hover {
+      background: #5568d3;
+    }
+    
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .status {
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+      display: none;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .cost-estimate {
+      background: #e8f5e9;
+      border: 2px solid #4caf50;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 13px;
+      color: #2e7d32;
+    }
+    
+    .cost-estimate strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+    
+    .api-links {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    
+    .api-link {
+      flex: 1;
+      padding: 8px;
+      background: #f5f5f5;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      text-align: center;
+      text-decoration: none;
+      color: #667eea;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    
+    .api-link:hover {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+    }
+    
+    /* Donation Section */
+    .donation-section {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 20px;
+      text-align: center;
+      border-top: 3px solid #667eea;
+    }
+    
+    .donation-section h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      color: #333;
+    }
+    
+    .donation-section p {
+      margin: 0 0 16px 0;
+      font-size: 13px;
+      color: #666;
+    }
+    
+    .donation-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .donate-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: #0070ba;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .donate-btn:hover {
+      background: #005ea6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 112, 186, 0.3);
+    }
+    
+    .qr-toggle {
+      background: transparent;
+      color: #667eea;
+      padding: 8px 16px;
+      font-size: 13px;
+      text-decoration: underline;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .qr-code {
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      background: white;
+      border-radius: 8px;
+    }
+    
+    .qr-code.show {
+      display: block;
+    }
+    
+    .qr-code img {
+      max-width: 200px;
+      border-radius: 8px;
+    }
+    
+    .qr-code p {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .made-by {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .footer {
+      background: #f9f9f9;
+      padding: 16px;
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      border-top: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🛡️ AI Content Guardian</h1>
+    <p>Protecting you from AI-generated misinformation</p>
+  </div>
+  
+  <div class="tabs">
+    <button class="tab active" data-tab="about">About</button>
+    <button class="tab" data-tab="pro">Pro Mode</button>
+    <button class="tab" data-tab="support">Support</button>
+  </div>
+  
+  <div class="content">
+    <!-- About Tab -->
+    <div class="tab-content active" id="about">
+      <div class="highlight">
+        <p class="highlight-text">✨ 100% Free - No Setup Required!</p>
+      </div>
+      
+      <div class="instructions">
+        <h3>📖 How to Use:</h3>
+        <ol>
+          <li>Right-click on any text, image, or page</li>
+          <li>Select "🔍 Check if AI-generated"</li>
+          <li>View the detailed analysis with a 1-10 score</li>
+          <li>Toggle between Large/Compact mode for comfort</li>
+        </ol>
+      </div>
+      
+      <div class="feature">
+        <h3>🎯 What We Check:</h3>
+        <p>
+          • Source credibility (trusted news, government sites)<br>
+          • AI generation patterns and indicators<br>
+          • Known AI platforms and content farms<br>
+          • Text writing style and structure<br>
+          • Image and video characteristics
+        </p>
+      </div>
+      
+      <div class="feature">
+        <h3>👵👴 Designed for Everyone:</h3>
+        <p>
+          Large text, simple language, and clear explanations make this tool accessible for all ages, 
+          especially helping elderly users protect themselves from AI-powered scams and misinformation.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Pro Mode Tab -->
+    <div class="tab-content" id="pro">
+      <div class="pro-header">
+        <h2>⚡ Pro Mode</h2>
+        <p>Enhanced AI-powered detection using Claude Vision</p>
+      </div>
+      
+      <div class="instructions">
+        <h3>🚀 Upgrade to AI-Powered Detection</h3>
+        <p style="margin-bottom: 12px;">
+          Pro Mode uses Anthropic's Claude AI to analyze images and text with much higher accuracy. 
+          You'll need your own API key (costs about $5 for 500+ checks).
+        </p>
+        <p style="margin: 0; font-weight: 600; color: #1565c0;">
+          You pay Anthropic directly - we don't charge anything extra!
+        </p>
+      </div>
+      
+      <div class="toggle-container">
+        <span class="toggle-label">Enable Pro Mode</span>
+        <label class="toggle">
+          <input type="checkbox" id="proModeToggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+      
+      <div id="proSettings" style="display: none;">
+        <div class="setting-group">
+          <label for="aiModel">AI Model:</label>
+          <select id="aiModel">
+            <option value="claude">Anthropic Claude (Recommended)</option>
+            <option value="openai">OpenAI GPT-4 Vision</option>
+            <option value="google">Google Gemini</option>
+          </select>
+        </div>
+        
+        <div class="setting-group">
+          <label for="apiKey">API Key:</label>
+          <input type="password" id="apiKey" placeholder="sk-ant-...">
+          <p style="font-size: 12px; color: #666; margin-top: 8px;">
+            Your API key is stored locally and never shared.
+          </p>
+        </div>
+        
+        <button id="saveProSettings">Save Pro Settings</button>
+        
+        <div class="status" id="proStatus"></div>
+        
+        <div class="cost-estimate">
+          <strong>💰 Estimated Costs:</strong>
+          ~$5 gets you 500+ image checks or 5,000+ text checks
+        </div>
+        
+        <div class="instructions" style="margin-top: 20px;">
+          <h3>📝 How to Get Your API Key:</h3>
+          <ol>
+            <li>Go to <strong>console.anthropic.com</strong></li>
+            <li>Sign up or log in</li>
+            <li>Add $5-20 in credits (Settings → Billing)</li>
+            <li>Go to API Keys section</li>
+            <li>Click "Create Key"</li>
+            <li>Copy the key (starts with sk-ant-)</li>
+            <li>Paste it above and click Save!</li>
+          </ol>
+        </div>
+        
+        <div class="api-links">
+          <a href="https://console.anthropic.com" target="_blank" class="api-link">Anthropic</a>
+          <a href="https://platform.openai.com" target="_blank" class="api-link">OpenAI</a>
+          <a href="https://makersuite.google.com" target="_blank" class="api-link">Google</a>
+        </div>
+      </div>
+      
+      <div id="proDisabled" style="display: block;">
+        <div class="feature">
+          <h3>✨ Pro Mode Benefits:</h3>
+          <p>
+            • <strong>Advanced Image Analysis:</strong> AI actually "sees" the image and detects artifacts<br>
+            • <strong>Better Text Detection:</strong> More nuanced understanding of writing patterns<br>
+            • <strong>Detailed Explanations:</strong> AI explains exactly why content seems AI-generated<br>
+            • <strong>Higher Accuracy:</strong> Significantly better than pattern matching alone
+          </p>
+        </div>
+        
+        <div class="highlight">
+          <p class="highlight-text">👆 Enable toggle above to get started!</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Support Tab -->
+    <div class="tab-content" id="support">
+      <div class="donation-section" style="background: white; border: none; padding: 0;">
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 8px; color: white; margin-bottom: 20px;">
+          <h2 style="margin: 0 0 8px 0; font-size: 22px;">☕ Support Development</h2>
+          <p style="color: white; opacity: 0.9; margin: 0;">Help keep AI Content Guardian free and improving!</p>
+        </div>
+        
+        <div style="padding: 20px;">
+          <p style="font-size: 15px; line-height: 1.6; color: #333; margin-bottom: 20px;">
+            AI Content Guardian is <strong>100% free</strong> and will always remain free. 
+            If this extension has helped protect you or your loved ones from AI-generated 
+            misinformation or scams, consider supporting its development.
+          </p>
+          
+          <div class="feature" style="margin-bottom: 20px;">
+            <h3>💡 Your Support Helps:</h3>
+            <p>
+              • Keep the extension free for everyone<br>
+              • Maintain and update detection databases<br>
+              • Add new features and improvements<br>
+              • Support vulnerable communities<br>
+              • Continue protecting people from AI scams
+            </p>
+          </div>
+          
+          <div class="donation-buttons">
+            <a href="https://www.paypal.com/paypalme/HackitZ" target="_blank" class="donate-btn">
+              💙 Donate via PayPal
+            </a>
+          </div>
+          
+          <button class="qr-toggle" id="qrToggleBtn">📱 Show PayPal QR Code</button>
+          
+          <div class="qr-code" id="qrCode">
+            <img src="icons/paypal-qr.jpg" alt="PayPal QR Code">
+            <p><strong>Scan to donate via PayPal</strong><br>
+            Please send as Friends & Family<br>
+            kev@hackitz.ca</p>
+          </div>
+          
+          <div class="made-by">
+            <p style="margin: 20px 0 8px 0; color: #333;">
+              <strong>Made with ❤️ by the developer</strong>
+            </p>
+            <p style="margin: 0; font-size: 11px;">
+              Questions? Email: kev@hackitz.ca
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p><strong>AI Content Guardian v1.0 Pro</strong></p>
+    <p>Free • Open Source • Privacy-Focused</p>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
